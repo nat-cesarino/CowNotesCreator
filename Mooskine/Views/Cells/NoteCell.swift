@@ -2,8 +2,7 @@
 //  NoteCell.swift
 //  Mooskine
 //
-//  Created by Josh Svatek on 2017-05-29.
-//  Copyright © 2017 Udacity. All rights reserved.
+//  Created by Nathalie Cesarino on 23/04/23.
 //
 
 import UIKit
