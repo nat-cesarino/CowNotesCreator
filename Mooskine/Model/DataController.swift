@@ -16,9 +16,21 @@ class DataController {
         return persistentContainer.viewContext
     }
 
+    var backgroundContext: NSManagedObjectContext!
+
     // Initialize the persistent container (the one that setups the stack)
     init(modelName: String) {
         persistentContainer = NSPersistentContainer(name: modelName)
+    }
+
+    func configureContexts() {
+        backgroundContext = persistentContainer.newBackgroundContext()
+
+        viewContext.automaticallyMergesChangesFromParent = true
+        backgroundContext.automaticallyMergesChangesFromParent = true
+
+        backgroundContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
     }
 
     // Load the persistent store, passing a function to get called after loading the store
@@ -28,6 +40,7 @@ class DataController {
                 fatalError(error!.localizedDescription)
             }
             self.autoSaveViewContext()
+            self.configureContexts()
             completion?()
         }
     }
